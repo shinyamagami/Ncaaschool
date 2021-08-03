@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 require 'json'
 
-module College
+module Team
   class Error < StandardError; end
 
 
-  class College
+  class Team
     attr_accessor :name, :division, :location, :conference, :nickname, :colors,
                   :website, :twitter, :facebook
 
@@ -72,7 +72,7 @@ module College
       #     end
       #     # puts details[0]
 
-      #     s = College::College.new(name, division, location, conference, nickname, website, twitter, facebook)
+      #     s = Team::Team.new(name, division, location, conference, nickname, website, twitter, facebook)
 
 
 

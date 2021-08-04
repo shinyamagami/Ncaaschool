@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 require "json"
-require "./lib/college"
 
-class Team < College
-  attr_accessor :website, :fb, :mbb, :wbb
 
-  def initialize
+class Team
+  attr_accessor :fb, :mbb, :wbb
 
-    @fb       = Fb.new
+  def initialize(website)
+
+    @fb       = Fb.new(website)
   end
 
 end

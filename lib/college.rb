@@ -17,9 +17,13 @@ class College
     @website    = website.nil? ? "" : website
     @twitter    = twitter.nil? ? "" : twitter
     @facebook   = facebook.nil? ? "" : facebook
-    @team = Team.new
+    # some colleges don't have websites
+    unless @website.empty? || !@division.eql?("Division I")
+    # unless @website.empty?
+      puts @division
+      @team = Team.new(@website)
+    end
   end
-
 
   
   # to convert a college object into json

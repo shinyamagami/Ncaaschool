@@ -59,7 +59,7 @@ class Ncaaschool
         # puts name
         begin
           college_links = doc.css('.school-header').css('.school-links').css('a')
-          website = college_links[0].attribute('href').value
+          website = college_links[0].attribute('href').value.insert(4, 's')
           twitter = college_links[1].attribute('href').value
           facebook = college_links[2].attribute('href').value
         rescue NoMethodError => e

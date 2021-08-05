@@ -4,10 +4,15 @@ require 'open-uri'
 require 'csv'
 require './lib/college'
 require 'json'
+require 'carmen'
+
+
 #require './lib/export_csv.rb'
 # require_relative "ncaaschool/version"
 
 class Ncaaschool
+  include Carmen
+
 
   # get each college page url on NCAA website and put them in an array
   def initialize
@@ -20,8 +25,8 @@ class Ncaaschool
     
 
     temps = []
-    # for i in 0..23
-    for i in 0..1
+    for i in 0..23
+    # for i in 0..1
       doc = Nokogiri::HTML(URI.open('https://www.ncaa.com/schools-index/' + i.to_s))
       # .abc for class, abc for html tags
 
@@ -41,10 +46,15 @@ class Ncaaschool
           if division_and_location.start_with?("Divi")
             dv = division_and_location.strip.split('-')
             division = dv[0].strip
-            location = dv[1].strip
+            location = dv[1].split(',')
+            city = location[0].strip
+            state = Country.coded('US').subregions.coded(location[1].strip).name
+
           else
             division = ""
-            location = division_and_location
+            location = division_and_location.split(',')
+            city = location[0].strip
+            state = Country.coded('US').subregions.coded(location[1].strip).name
           end
 
           name = doc.css('.school-header').css('h1').text.strip
@@ -67,7 +77,7 @@ class Ncaaschool
         end
         # puts details[0]
 
-        s = College.new(name, division, location, conference, nickname, colors, website, twitter, facebook)
+        s = College.new(name, division, city, state, conference, nickname, colors, website, twitter, facebook)
 
 
         # name => College object

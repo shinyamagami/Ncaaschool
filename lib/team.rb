@@ -7,7 +7,7 @@ class Team
 
   def initialize(website)
 
-    @fb       = Fb.new(website)
+    # @fb       = Fb.new(website)
   end
 
 end

@@ -4,13 +4,14 @@ require "json"
 
 
 class College
-  attr_accessor :name, :division, :location, :conference, :nickname, :colors,
+  attr_accessor :name, :division, :city, :state, :conference, :nickname, :colors,
                 :website, :twitter, :facebook, :team
 
-  def initialize(name, division, location, conference, nickname, colors, website, twitter, facebook)
+  def initialize(name, division, city, state, conference, nickname, colors, website, twitter, facebook)
     @name       = name
     @division   = division
-    @location   = location
+    @city       = city
+    @state      = state
     @conference = conference
     @nickname   = nickname
     @colors     = colors
@@ -18,10 +19,10 @@ class College
     @twitter    = twitter.nil? ? "" : twitter
     @facebook   = facebook.nil? ? "" : facebook
     # some colleges don't have websites
-    unless @website.empty? || !@division.eql?("Division I")
-    # unless @website.empty?
-      puts @division
-      @team = Team.new(@website)
+    # unless @website.empty? || !@division.eql?("Division I")
+    unless @website.empty?
+      # puts @division
+      # @team = Team.new(@website)
     end
   end
 
@@ -30,7 +31,8 @@ class College
   def as_json(options={}){
     name:       @name,
     division:   @division,
-    location:   @location,  
+    city:       @city,
+    state:      @state, 
     conference: @conference,          
     nickname:   @nickname,
     colors:     @colors,

@@ -12,4 +12,7 @@ gem "nokogiri"
 gem "csv"
 
 
-gem "jbuilder"
+
+
+# to convert states' name
+gem 'carmen'

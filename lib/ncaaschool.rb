@@ -20,8 +20,8 @@ class Ncaaschool
     
     # for each college page on ncaa.com
     @college_pages = []
-    # hash is better than array
-    @schools = {}
+    # hash is better than array but decided to use an array
+    @schools = []
     
 
     temps = []
@@ -44,7 +44,7 @@ class Ncaaschool
 
           # some schools aren't in any divisions
           if division_and_location.start_with?("Divi")
-            dv = division_and_location.strip.split('-')
+            dv = division_and_location.strip.split('-', 2)
             division = dv[0].strip
             location = dv[1].split(',')
             city = location[0].strip
@@ -66,25 +66,43 @@ class Ncaaschool
         rescue NoMethodError => e
         rescue => e
         end
-        # puts name
+
         begin
           college_links = doc.css('.school-header').css('.school-links').css('a')
           website = college_links[0].attribute('href').value.insert(4, 's')
+          # website    = website.nil? ? "" : website
           twitter = college_links[1].attribute('href').value
+          # twitter    = twitter.nil? ? "" : twitter
           facebook = college_links[2].attribute('href').value
+          # facebook   = facebook.nil? ? "" : facebook
         rescue NoMethodError => e
         rescue => e
         end
         # puts details[0]
 
-        s = College.new(name, division, city, state, conference, nickname, colors, website, twitter, facebook)
+
+        college = {"name": name, "division": division, "city": city,
+          "state": state, "conference": conference, "nickname": nickname,
+          "colors": colors, "website": website,
+          "twitter": twitter, "facebook": facebook}
+
+        college.each do |key, value|
+          if value.nil?
+            college[key] = ""
+          end
+        end
+
+        @schools.push(college)
 
 
-        # name => College object
-        @schools[s.name] = s
-        # puts @schools.to_json
-        # puts @schools.to_json
-        # puts JSON.pretty_generate(@schools)
+
+
+        # this puts college objects in a hash with names as keys and objects as values
+        # s = College.new(name, division, city, state, conference, nickname, colors, website, twitter, facebook)
+        # @schools[s.name] = s
+
+
+
 
       end
     end
@@ -106,6 +124,11 @@ class Ncaaschool
 
 
 
+
+
+
+
+
   def export_json
     dname = "./outputs"
     Dir.mkdir(dname) unless File.exists?(dname)
@@ -119,6 +142,22 @@ class Ncaaschool
     f.write(JSON.pretty_generate(@schools))      
   end
 
+
+  def export_csv
+    def create(name_of_campus, time)
+      file_name = "./outputs/" + name_of_campus + "_" + time + ".csv"
+      @csv = CSV.new(file_name)
+      @csv = CSV.open(file_name, "wb")
+      column_names = ["name", "division", "city" ,"state", "conference", "nickname",
+                      "colors", "website", "twitter", "facebook"]
+      @csv << column_names
+    end
+
+    def write_row(row_values)
+      @csv << row_values
+    end    
+    
+  end
 
 
 end

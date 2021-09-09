@@ -2,7 +2,8 @@
 
 Scrape all the NCAA schools' websites.
 
-
+It just scrape basic information of every school so far
+since I'm a little busy.
 
 ## Installation
 

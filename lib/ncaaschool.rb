@@ -4,6 +4,7 @@ require 'open-uri'
 require 'csv'
 require './lib/college'
 require 'json'
+require "active_support"
 require 'carmen'
 
 
@@ -93,14 +94,14 @@ class Ncaaschool
         end
 
         @schools.push(college)
-
+        puts name
 
 
 
         # this puts college objects in a hash with names as keys and objects as values
         # s = College.new(name, division, city, state, conference, nickname, colors, website, twitter, facebook)
         # @schools[s.name] = s
-
+        
 
 
 
